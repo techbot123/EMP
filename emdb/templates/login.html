@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="signup__container">
+	  <div class="container__child signup__thumbnail">
+	    <div class="thumbnail__content text-center">
+	      <h1 class="heading--primary">EM Electronix</h1>
+	      <h2 class="heading--secondary">Employee Sign Up portal</h2>
+	    </div>
+	    <div class="signup__overlay"></div>
+	  </div>
+	  <div class="container__child signup__form">
+	    <form action='/after_login' method="POST">
+	      <div class="form-group">
+	        <label for="email">Email</label>
+	        <input class="form-control" type="text" name="email" id="email" placeholder="john@emelectronix.com" required/>
+	      </div>
+	      <div class="form-group">
+	        <label for="Password">Password</label>
+	        <input class="form-control" type="password" name="password" id="password" required/>
+	      </div>
+	      <div class="m-t-lg">
+	        	<input class="btn btn--form" type="submit" value="login" href="/after_login"/>   
+	      </div>
+	      <div>
+	      		<h2>OR</h2>
+	      </div>
+	    </form>
+	    <form action='/register' method="GET">
+	      <div class="m-t-lg">
+	        	<input class="btn btn--form" type="submit" value="Sign up" href="/register"/>   
+	      </div>
+	    </form>
+	      
+	  </div>
+	</div>
+
+{% endblock %}

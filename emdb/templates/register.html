@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block content %}
+  <form action='/form' method="POST">
+    <div class="signup__container">
+      <div class="container__child signup__thumbnail">
+        <div class="thumbnail__content text-center">
+          <h1 class="heading--primary">EM Electronix</h1>
+          <h2 class="heading--secondary">Employee Sign Up portal</h2>
+        </div>
+        <div class="signup__overlay"></div>
+      </div>
+      <div class="container__child signup__form">
+        <form action="#">
+          <div class="form-group">
+            <label for="First Name">First Name</label>
+            <input class="form-control" type="text" name="first_name" id="first_name" required/>
+          </div>
+          <div class="form-group">
+            <label for="Last Name">Last Name</label>
+            <input class="form-control" type="text" name="last_name" id="last_name" required/>
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input class="form-control" type="text" name="email" id="email" placeholder="john@emelectronix.com" required />
+          </div>
+          <div class="form-group">
+            <label for="Address Line 1">Address Line 1</label>
+            <input class="form-control" type="text" name="Address1" id="address1" required/>
+          </div>
+          <div class="form-group">
+            <label for="Address Line 2">Address Line 2</label>
+            <input class="form-control" type="text" name="Address2" id="address2" />
+          </div>
+          <div class="address_group">
+            <div class="form-group">
+              <label for="City">City</label>
+              <input class="form-control" type="text" name="City" id="City" required/>
+            </div>
+            <div class="address_group">
+              <label for="State">State</label>
+              <input class="form-control" type="text" name="State" id="State" required/>
+            </div>
+            <div class="address_group">
+              <label for="Postal">Postal code</label>
+              <input class="form-control" type="number" name="Postal" id="Postal" required/>
+            </div>
+          </div>
+          <div class="address_group">
+              <label for="Postal">Phone # - </label>
+              <input class="form-control" type="number" name="phone" id="phone" required/>
+          </div>
+          <div class="address_group">
+              <label for="bday">Phone # - </label>
+              <input class="form-control" type="date" name="bday" id="bday" required/>
+          </div>
+          <div class="m-t-lg">
+                <input class="btn btn--form" type="submit" value="Register" href="/form"/>
+          </div>
+        </form>  
+      </div>
+    </div>
+  </form>
+{% endblock %}
