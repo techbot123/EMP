@@ -1,37 +1,52 @@
 {% extends "layout.html" %}
 {% block content %}
-	<div class="signup__container">
-	  <div class="container__child signup__thumbnail">
-	    <div class="thumbnail__content text-center">
-	      <h1 class="heading--primary">EM Electronix</h1>
-	      <h2 class="heading--secondary">Employee Sign Up portal</h2>
-	    </div>
-	    <div class="signup__overlay"></div>
-	  </div>
-	  <div class="container__child signup__form">
-	    <form action='/after_login' method="POST">
-	      <div class="form-group">
-	        <label for="email">Email</label>
-	        <input class="form-control" type="text" name="email" id="email" placeholder="john@emelectronix.com" required/>
-	      </div>
-	      <div class="form-group">
-	        <label for="Password">Password</label>
-	        <input class="form-control" type="password" name="password" id="password" required/>
-	      </div>
-	      <div class="m-t-lg">
-	        	<input class="btn btn--form" type="submit" value="login" href="/after_login"/>   
-	      </div>
-	      <div>
-	      		<h2>OR</h2>
-	      </div>
-	    </form>
-	    <form action='/register' method="GET">
-	      <div class="m-t-lg">
-	        	<input class="btn btn--form" type="submit" value="Sign up" href="/register"/>   
-	      </div>
-	    </form>
-	      
-	  </div>
-	</div>
-
-{% endblock %}
+    <div class="content-section">
+        <form method="POST" action="/login">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Log In</legend>
+                <div class="form-group">
+                    {{ form.email_id.label(class="form-control-label") }}
+                    {% if form.email_id.errors %}
+                        {{ form.email_id(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email_id.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email_id(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password.label(class="form-control-label") }}
+                    {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.password(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-check">
+                    {{ form.remember(class="form-check-input") }}
+                    {{ form.remember.label(class="form-check-label") }}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.login(class="btn btn-outline-info") }}
+            </div>
+            <small class="text-muted ml-2">
+                <a href="#">Forgot Password?</a>
+            </small>
+        </form>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
+        </small>
+    </div>
+{% endblock content %}
