@@ -1,0 +1,8 @@
+{% extends "layout.html" %}
+{% block content %}
+  <p> {{ current_user.__class__ }} </p>
+	<ul class='nav'>
+		<li class='nav-link'><a href="{{url_for('employees.user_lookup')}}">Directory</a></li>
+		<li class='nav-link'><a href="{{url_for('employees.personal_info')}}">Personal Information</a></li>
+	</ul>
+{% endblock %}

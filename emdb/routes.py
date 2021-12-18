@@ -11,6 +11,7 @@ from flask_login import login_user, login_required, logout_user, fresh_login_req
 from emdb.models import Employee, check_password, User
 from werkzeug.utils import secure_filename
 import pickle
+from emdb.owner.models import Owner
 
 
 PATH_TO_LDB = '/Users/skattish/Documents/DBMS/db_files/'
@@ -42,14 +43,24 @@ def login():
         user = db['user_info'].find_one({"email_id": form.email_id.data})
         # print(f'printing user info: {user}')
         if user is not None and check_password(user['password'], form.password.data):
-            print('User Validated')
             user_ = pickle.loads(user['_pickled'])
             login_user(user_)
             flash('Successful login!', 'success')
-            next = request.args.get('next')
-            if next == None or not next[0] == '/':
-                next = url_for('home')
-            return redirect(url_for(next.split('/')[-1]))
+            if isinstance(user_, Owner):
+                print('Owner logged in')
+                # next = request.args.get('next')
+                # if next == None or not next[0] == '/':
+                #     next = url_for('owners.home')
+                # return redirect(url_for(next.split('/')[-1]))
+                return redirect(url_for('owners.home'))
+            elif isinstance(user_, Employee):
+                print('employee logged in')
+                print(user_.pay)
+                # next = request.args.get('next')
+                # if next == None or not next[0] == '/':
+                #     next = url_for('employees.home')
+                # return redirect(url_for(next.split('/')[-1]))
+                return redirect(url_for('employees.home'))
         elif not user:
             flash('The email you entered isn’t connected to an account. Find your account and log in.', 'danger')
             return redirect(url_for('login'))
@@ -65,7 +76,11 @@ def register():
       form = RegistrationForm()
       if form.validate_on_submit():
             print('Validated User!')
-            employee = Employee()
+            if form.email_id.data == 'sagarck44@gmail.com':
+                employee = Owner()
+            else:
+                employee = Employee()
+            print(f'In register func and the class is {employee.__class__}')
             profile_image = secure_filename(form.profile_image.data.filename) if\
                             form.profile_image.data else None
             if employee.create_user_profile(form.first_name.data, \
@@ -79,11 +94,11 @@ def register():
             return redirect(url_for('login'))
       return render_template("register.html", title = 'Register', form = form)
 
-@app.route('/home')
-@decorator_func
-@login_required
-def home():
-      return render_template("home.html", title = 'Home')
+# @app.route('/home')
+# @decorator_func
+# @login_required
+# def home():
+#       return render_template("home.html", title = 'Home')
 
 @app.route('/logout')
 @decorator_func

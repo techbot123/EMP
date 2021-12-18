@@ -17,5 +17,7 @@ login_manager.login_view = 'login'
 from emdb import routes
 
 from emdb.employee.routes import employee_b
+from emdb.owner.routes import owner_b
 
 app.register_blueprint(employee_b, url_prefix = '/employees')
+app.register_blueprint(owner_b, url_prefix = '/owners')

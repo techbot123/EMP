@@ -13,7 +13,7 @@ def check_password(hash_password, password):
 def load_user(id):
 	print(f'in load user function with id {id} with type {type(id)}')
 	u = db['user_info'].find_one({"id":id})
-	print(u)
+	# print(u)
 	return pickle.loads(u['_pickled'])
 
 class Employee(UserMixin):
@@ -38,6 +38,7 @@ class Employee(UserMixin):
 		self.profile_image = None
 		self.reports_to = None
 		self.reported_by = []
+		self.pay = None
 		self._pickled = None
 
 	def create_user_profile(self, first_name, last_name,
@@ -82,6 +83,7 @@ class Employee(UserMixin):
                                  'profile_image':self.profile_image,
                                  'reports_to':self.reports_to,
                                  'reported_by':self.reported_by,
+								 'pay':None,
 								 '_pickled':pickle.dumps(self)
 								}
 			user_col.insert_one(self.user_profile)

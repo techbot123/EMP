@@ -7,10 +7,18 @@ from emdb.routes import decorator_func
 import flask_login
 from flask_login import login_required, fresh_login_required
 from emdb.employee.contact_change_form import (AddressChangeForm, PhoneChangeForm,
-                                                                EmailChangeForm)
+                                               EmailChangeForm, ProfileImageChange)
 
 employee_b = Blueprint('employees', __name__,
                                 template_folder = 'templates/employee')
+
+
+@employee_b.route('/home')
+@decorator_func
+@login_required
+def home():
+    print('employee home')
+    return render_template("employee_home.html", title = 'Home')
 
 @employee_b.route('/user_lookup', methods = ['POST', 'GET'])
 @decorator_func
@@ -134,3 +142,24 @@ def personal_info_email_change():
     else:
         return render_template("email_change.html", title = 'Change your \
                             email - EM', form = form, email = _user_email)
+
+
+@employee_b.route('/personal_info_email_change', methods = ['GET', 'POST'])
+@decorator_func
+@fresh_login_required
+def personal_info_profile_image_change():
+    form = ProfileImageChange()
+    user = load_user(flask_login.current_user.id)
+    _user_email = user.email_id
+    if form.validate_on_submit():
+        profile_image = secure_filename(form.profile_image.data.filename) if\
+                        form.profile_image.data else None
+        user.profile_image = profile_image
+        user._pickled = pickle.dumps(user)
+        db['user_info'].update_one({'email_id':_user_email}, {'$set':{\
+                                                'profile_image':profile_image,
+                                                '_pickled':user._pickled}})
+        return redirect(url_for('.personal_info'))
+    else:
+        return render_template("email_change.html", title = 'Change your \
+                            profile picture - EM', form = form)

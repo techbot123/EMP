@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
+from wtforms import (StringField, PasswordField, SubmitField, BooleanField,
+                                        IntegerField, FileField)
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms.fields.html5 import DateField,DateTimeField
 import phonenumbers
@@ -26,3 +27,7 @@ class PhoneChangeForm(FlaskForm):
     phone = StringField('Phone',
                            validators=[DataRequired(), Length(min=10, max=15)])
     submit = SubmitField('Submit')
+
+class ProfileImageChange(FlaskForm):
+    profile_image = FileField('Image')
+    submit = SubmitField('Upload')
