@@ -7,8 +7,9 @@ from emdb.mongo_connector import MongoCon
 from functools import wraps
 import json
 import os
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, fresh_login_required
 from emdb.models import Employee, check_password, User
+from werkzeug.utils import secure_filename
 # from emdb.users.user_lookup_form import UserLookupForm, ChangePersonalInfo
 import pickle
 
@@ -43,7 +44,7 @@ def login():
         # print(f'printing user info: {user}')
         if user is not None and check_password(user['password'], form.password.data):
             print('User Validated')
-            user_ = pickle.loads(user['_pickeld'])
+            user_ = pickle.loads(user['_pickled'])
             login_user(user_)
             flash('Successful login!', 'success')
             next = request.args.get('next')
@@ -66,8 +67,14 @@ def register():
       if form.validate_on_submit():
             print('Validated User!')
             employee = Employee()
-            if employee.create_user_profile(form.first_name.data, form.last_name.data, form.email_id.data, str(form.address_line_1.data + ' ' + form.address_line_2.data +\
-                  ' ' + form.city.data + ' ' + form.state.data + ' ' + str(form.zipcode.data)), form.phone.data, form.birth_date.data, form.password.data):
+            print((form.profile_image.data))
+            # print(secure_filename(form.profile_image.data))
+            print(secure_filename(form.profile_image.data.filename))
+            if employee.create_user_profile(form.first_name.data, \
+                form.last_name.data, form.email_id.data, form.address_line_1.data,
+                form.address_line_2.data, form.city.data, form.state.data,
+                str(form.zipcode.data), form.phone.data, form.birth_date.data,
+                form.password.data, profile_image = secure_filename(form.profile_image.data.filename)):
                 flash(f'Account created for {form.first_name.data} successfully!', 'success')
             else:
                 flash(f'Email ID already exists!', 'danger')

@@ -16,3 +16,13 @@ class AddressChangeForm(FlaskForm):
                            validators=[DataRequired(), Length(min=2, max=50)])
     zipcode = StringField('zipcode', validators=[DataRequired(), Length(min=2, max=10)])
     submit = SubmitField('Submit')
+
+class EmailChangeForm(FlaskForm):
+    email_id = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    submit = SubmitField('Submit')
+
+class PhoneChangeForm(FlaskForm):
+    phone = StringField('Phone',
+                           validators=[DataRequired(), Length(min=10, max=15)])
+    submit = SubmitField('Submit')

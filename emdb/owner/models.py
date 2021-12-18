@@ -1,3 +1,4 @@
+# import os
 import time
 from emdb import db, login_manager
 from datetime import datetime
@@ -5,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 import pickle
 import uuid
+# from emdb.routes import login_manager
 
 def check_password(hash_password, password):
 	return check_password_hash(hash_password, password)
@@ -14,9 +16,9 @@ def load_user(id):
 	print(f'in load user function with id {id} with type {type(id)}')
 	u = db['user_info'].find_one({"id":id})
 	print(u)
-	return pickle.loads(u['_pickled'])
+	return pickle.loads(u['_pickeld'])
 
-class Employee(UserMixin):
+class Owner(UserMixin):
 	def __init__(self, active=True, anonymous = False,\
 	 			authenticated = True):
 		self.id  = None
@@ -36,14 +38,13 @@ class Employee(UserMixin):
 		self.user_profile = None
 		self.role = None
 		self.profile_image = None
-		self.reports_to = None
-		self.reported_by = []
-		self._pickled = None
+        self.reports_to = None
+        self.reported_by = []
 
 	def create_user_profile(self, first_name, last_name,
 							email_id, address_line_1, address_line_2, city,
                             state, zipcode, phone, birth_date, password,
-                            profile_image = None
+                            profile_image = profile_image
                             ):
 		user_col = db['user_info']
 		if user_col.find_one({'email_id':email_id}):
@@ -55,11 +56,11 @@ class Employee(UserMixin):
 			self.last_name = last_name
 			self.email_id = email_id
 			self.address_line_1 = address_line_1
-			self.address_line_2 = address_line_2
-			self.city = city
-			self.state = state
-			self.zipcode = zipcode
-			self.profile_image = profile_image
+            self.address_line_2 = address_line_2
+            self.city = city
+            self.state = state
+            self.zipcode = zipcode
+            self.profile_image = profile_image
 			self.phone = phone
 			self.birth_date = datetime.combine(birth_date, datetime.min.time())
 			self.password_hash = generate_password_hash(password)
@@ -82,8 +83,10 @@ class Employee(UserMixin):
                                  'profile_image':self.profile_image,
                                  'reports_to':self.reports_to,
                                  'reported_by':self.reported_by,
-								 '_pickled':pickle.dumps(self)
+								 '_pickeld':pickle.dumps(self)
 								}
+			# self.myself = self
+
 			user_col.insert_one(self.user_profile)
 			return True
 
@@ -99,7 +102,7 @@ class Employee(UserMixin):
 			}
 
 	def get_id(self):
-		# print(f'my id is {self.id}')
+		print(f'my id is {self.id}')
 		return self.id
 
 

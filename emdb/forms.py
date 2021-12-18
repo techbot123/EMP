@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms.fields.html5 import DateField,DateTimeField
+from flask_wtf.file import FileField
 import phonenumbers
 from emdb import db
 
@@ -28,11 +29,8 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password',
                                      validators=[DataRequired(), EqualTo('password', message = 'Passwords must match!')])
+    profile_image = FileField('Image')
     submit = SubmitField('Sign Up')
-
-    # def check_email(self, email_id):
-    #     if db['user_info'].find_one({"email_id":email}):
-    #         raise ValidationError('This Email ID has already been registered!')
 
     def validate_phone(self, phone):
         try:
