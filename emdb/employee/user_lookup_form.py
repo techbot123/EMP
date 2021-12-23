@@ -10,3 +10,4 @@ class ChangePersonalInfo(FlaskForm):
     address = SubmitField('Change your Address')
     phone = SubmitField('Change your Phone')
     email = SubmitField('Change your Email')
+    profile_image = SubmitField('Change your Profile picture')

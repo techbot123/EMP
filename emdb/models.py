@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 import pickle
 import uuid
+from emdb.s3 import upload_file, get_profile_image_s3, get_profile_image
 
 def check_password(hash_password, password):
 	return check_password_hash(hash_password, password)
@@ -13,7 +14,6 @@ def check_password(hash_password, password):
 def load_user(id):
 	print(f'in load user function with id {id} with type {type(id)}')
 	u = db['user_info'].find_one({"id":id})
-	# print(u)
 	return pickle.loads(u['_pickled'])
 
 class Employee(UserMixin):
@@ -35,10 +35,11 @@ class Employee(UserMixin):
 		self.myself = None
 		self.user_profile = None
 		self.role = None
-		self.profile_image = None
+		self.profile_image = {}
 		self.reports_to = None
 		self.reported_by = []
 		self.pay = None
+		self.pay_slips = {}
 		self._pickled = None
 
 	def create_user_profile(self, first_name, last_name,
@@ -60,11 +61,24 @@ class Employee(UserMixin):
 			self.city = city
 			self.state = state
 			self.zipcode = zipcode
-			self.profile_image = profile_image
+			# self.profile_image = profile_image
 			self.phone = phone
 			self.birth_date = datetime.combine(birth_date, datetime.min.time())
 			self.password_hash = generate_password_hash(password)
 			self.created_on = time.time()
+			if profile_image:
+				sto_det = upload_file(profile_image)
+				if sto_det:
+					filenames3, bucket = sto_det
+					print(f'filename is {filenames3} and bucket is {bucket}')
+					profile_det = {'file_path':filenames3,
+								   'bucket_name':bucket
+								   }
+					self.profile_image = profile_det
+				else:
+					print('error uploading image!')
+			else:
+				profile_det = None
 			self.user_profile = {
 								 'id':self.id,
 								 'first_name':self.first_name,
@@ -80,10 +94,11 @@ class Employee(UserMixin):
 								 'created_on':self.created_on,
 								 'password':self.password_hash,
                                  'role':self.role,
-                                 'profile_image':self.profile_image,
+                                 'profile_image':profile_det,
                                  'reports_to':self.reports_to,
                                  'reported_by':self.reported_by,
 								 'pay':None,
+								 'pay_slips':{},
 								 '_pickled':pickle.dumps(self)
 								}
 			user_col.insert_one(self.user_profile)
@@ -93,12 +108,24 @@ class Employee(UserMixin):
 	# 	print(f'User\'s first name is {self.first_name} and last name is {self.last_name}')
 
 	def employee_lookup_info(self):
-		return {
+		if self.profile_image:
+			print(self.profile_image)
+			profile_image_url = get_profile_image(
+								img_path_s3 = self.profile_image['file_path'],
+								bucket_name = self.profile_image['bucket_name']
+								)
+		else:
+			profile_image = get_profile_image()
+		return (
+		profile_image_url,
+		{
 		'First Name':self.first_name,
 		'Last Name':self.last_name,
 		'Email':self.email_id,
-		'Phone':self.phone
+		'Phone':self.phone,
+		'Reports to':self.reports_to
 			}
+		)
 
 	def get_id(self):
 		# print(f'my id is {self.id}')

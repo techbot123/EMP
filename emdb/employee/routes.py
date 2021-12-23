@@ -8,9 +8,13 @@ import flask_login
 from flask_login import login_required, fresh_login_required
 from emdb.employee.contact_change_form import (AddressChangeForm, PhoneChangeForm,
                                                EmailChangeForm, ProfileImageChange)
+from werkzeug.utils import secure_filename
+from PIL import Image
+import base64
+import io
 
 employee_b = Blueprint('employees', __name__,
-                                template_folder = 'templates/employee')
+                                template_folder = 'templates/employee', static_folder='static')
 
 
 @employee_b.route('/home')
@@ -29,12 +33,12 @@ def user_lookup():
         if form.validate_on_submit():
             user = db['user_info'].find_one({"first_name": form.search_name.data})
             if user:
-                user = pickle.loads(user['_pickeld'])
-                print(f'printing lookup user info: {user.employee_lookup_info()}')
-                user = user.employee_lookup_info()
-                print(user)
+                user = pickle.loads(user['_pickled'])
+                profile_image_url, user_info = user.employee_lookup_info()
                 return render_template("user_lookup_result.html", title = 'Welc\
-                                           ome Home', form = form, user_ = user)
+                                    ome Home', form = form, user_ = user_info, \
+                                    profile_image = profile_image_url, \
+                                    alt = '/static/no_profile_picture.jpeg')
             else:
                 return render_template("user_lookup_result.html", title = 'Welco\
                                               me Home', form = form, user_=None)
@@ -66,6 +70,9 @@ def personal_info():
         elif form.email.data:
             print('you chose email')
             return redirect(url_for('.personal_info_email_change'))
+        elif form.profile_image.data:
+            print('you chose profile image')
+            return redirect(url_for('.personal_info_profile_image_change'))
         else:
             return redirect(url_for('.personal_info'))
     else:
@@ -134,7 +141,6 @@ def personal_info_email_change():
     if form.validate_on_submit():
         user.email_id = form.email_id.data
         user._pickled = pickle.dumps(user)
-        # print(f'new email is {new_email}')
         db['user_info'].update_one({'email_id':_user_email}, {'$set':{\
                                                         'email_id':user.email_id,
                                                         '_pickled':user._pickled}})
@@ -144,7 +150,7 @@ def personal_info_email_change():
                             email - EM', form = form, email = _user_email)
 
 
-@employee_b.route('/personal_info_email_change', methods = ['GET', 'POST'])
+@employee_b.route('/personal_info_profile_image_change', methods = ['GET', 'POST'])
 @decorator_func
 @fresh_login_required
 def personal_info_profile_image_change():
@@ -161,5 +167,5 @@ def personal_info_profile_image_change():
                                                 '_pickled':user._pickled}})
         return redirect(url_for('.personal_info'))
     else:
-        return render_template("email_change.html", title = 'Change your \
+        return render_template("profile_image_change.html", title = 'Change your \
                             profile picture - EM', form = form)

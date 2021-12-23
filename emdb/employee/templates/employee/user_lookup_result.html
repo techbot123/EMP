@@ -3,6 +3,7 @@
 	<div class="content-section">
 		{% if user_ is not none %}
         <h1>User found</h1>
+				<img src= " {{profile_image}} " alt="No IMage" width="120" height="90" />
         <table>
         {% for key in user_.keys() %}
            <tr>

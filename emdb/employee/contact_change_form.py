@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, PasswordField, SubmitField, BooleanField,
-                                        IntegerField, FileField)
+                                        IntegerField)
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from wtforms.fields.html5 import DateField,DateTimeField
 import phonenumbers
+from flask_wtf.file import FileField
 # from emdb import db
 
 class AddressChangeForm(FlaskForm):
