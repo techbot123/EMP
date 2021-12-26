@@ -1,7 +1,7 @@
 from flask import render_template, request, url_for, flash, redirect
 
 from emdb import app, db, login_manager
-# from emdb.forms import LoginForm
+import flask_login
 from emdb.forms import RegistrationForm, LoginForm
 from emdb.mongo_connector import MongoCon
 from functools import wraps
@@ -30,6 +30,20 @@ def write_to_file(emp_obj):
       num_files = len(os.listdir(PATH_TO_LDB))
       with open(PATH_TO_LDB + 'user_file'+str(num_files + 1) + '.json', 'w') as outfile:
             json.dump(emp_obj, outfile)
+
+@app.route('/home', methods = ["GET", "POST"])
+@decorator_func
+def home():
+    print('in main home')
+    print(flask_login.current_user.__class__)
+    if isinstance(flask_login.current_user, Owner):
+        print('user is owner')
+        return redirect(url_for('owners.home'))
+    elif isinstance(flask_login.current_user, Employee):
+        print('user is emploeyy')
+        return redirect(url_for('employees.home'))
+    print(flask_login.current_user.__class__)
+    return redirect(url_for('owners.home'))
 
 @app.route('/')
 @app.route('/login', methods = ["GET", "POST"])
@@ -68,8 +82,9 @@ def register():
             else:
                 employee = Employee()
             print(f'In register func and the class is {employee.__class__}')
-            print(form.profile_image.data.filename, type(form.profile_image.data))
+            # print(form.profile_image.data.filename, type(form.profile_image.data))
             profile_image = form.profile_image.data
+            print(profile_image)
             # print(profile_image.__name__)
             if employee.create_user_profile(form.first_name.data, \
                 form.last_name.data, form.email_id.data, form.address_line_1.data,

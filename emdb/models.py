@@ -5,7 +5,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 import pickle
 import uuid
-from emdb.s3 import upload_file, get_profile_image_s3, get_profile_image
+from emdb.s3 import (upload_file, get_profile_image, DEFAULT_PATH_TO_S3,
+ 					DEFAULT_IMG_BUCKET_S3, get_pay_slips)
+from flask import flash
 
 def check_password(hash_password, password):
 	return check_password_hash(hash_password, password)
@@ -61,7 +63,6 @@ class Employee(UserMixin):
 			self.city = city
 			self.state = state
 			self.zipcode = zipcode
-			# self.profile_image = profile_image
 			self.phone = phone
 			self.birth_date = datetime.combine(birth_date, datetime.min.time())
 			self.password_hash = generate_password_hash(password)
@@ -75,10 +76,11 @@ class Employee(UserMixin):
 								   'bucket_name':bucket
 								   }
 					self.profile_image = profile_det
-				else:
-					print('error uploading image!')
 			else:
-				profile_det = None
+				self.profile_image = {'file_path':DEFAULT_PATH_TO_S3,
+							   		  'bucket_name':DEFAULT_BUCKET_S3
+							   		 }
+
 			self.user_profile = {
 								 'id':self.id,
 								 'first_name':self.first_name,
@@ -115,7 +117,7 @@ class Employee(UserMixin):
 								bucket_name = self.profile_image['bucket_name']
 								)
 		else:
-			profile_image = get_profile_image()
+			profile_image_url = get_profile_image()
 		return (
 		profile_image_url,
 		{
@@ -128,9 +130,26 @@ class Employee(UserMixin):
 		)
 
 	def get_id(self):
-		# print(f'my id is {self.id}')
 		return self.id
 
+	def employee_pay_slip_lookup(self):
+		if not self.pay_slips:
+			flash(f'employee has no pay slips uploaded yet!', 'danger')
+			return None
+		pay_slip_result = {}
+		for dates in self.pay_slips.keys():
+			print()
+			print(f'dates is :{dates}')
+			print(f"pay slip is {self.pay_slips[dates]['pay_slip_path']} {self.pay_slips[dates]['bucket']}")
+			try:
+				pay_slip_result[dates] = get_pay_slips(self.pay_slips[dates]['pay_slip_path'],
+												   self.pay_slips[dates]['bucket'])
+				print(f'result is {pay_slip_result}')
+				return pay_slip_result
+			except:
+				flash(f'Error getting payslips', 'danger')
+				return None
+		return None
 
 
 class User(Employee, UserMixin):

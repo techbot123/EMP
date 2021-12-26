@@ -49,8 +49,7 @@ def upload_payslips():
         current_user = load_user(flask_login.current_user.id)
         print(form.pay_slip.data, type(form.pay_slip.data))
         print(form.email_id.data)
-        pay_slip = secure_filename(form.pay_slip.data.filename) if \
-                        form.pay_slip.data else None
+        pay_slip = form.pay_slip.data
         print()
         if pay_slip:
             if current_user.upload_employee_pay_slips(form.email_id.data,

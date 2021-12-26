@@ -11,3 +11,4 @@ class ChangePersonalInfo(FlaskForm):
     phone = SubmitField('Change your Phone')
     email = SubmitField('Change your Email')
     profile_image = SubmitField('Change your Profile picture')
+    pay_slips = SubmitField('View your pay slips')

@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block content %}
+	<div class="content-section">
+		{% if pay_slips is not none %}
+        <table>
+        {% for key in pay_slips.keys() %}
+           <tr>
+						 		<th> <img src= " {{ pay_slips[key] }} " alt="No IMage" width="120" height="90" /> </th>
+           </tr>
+        {% endfor %}
+        </table>
+		{% else %}
+			<h1>user not found!</h1>
+		{% endif %}
+	</div>
+{% endblock %}
