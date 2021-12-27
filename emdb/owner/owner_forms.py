@@ -22,3 +22,7 @@ class EmployeeDecrementPay(FlaskForm):
     email_id = StringField('Enter Employee Email')
     dec = IntegerField('Enter Decrement in percentage!')
     submit = SubmitField('Submit')
+
+class EmployeePaySetConfirmation(FlaskForm):
+    edit = SubmitField('Edit')
+    confirm = SubmitField('Confirm')

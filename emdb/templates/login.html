@@ -1,41 +1,51 @@
-{% extends "layout.html" %}
-{% block content %}
-    <div class="content-section">
+<!-- {% extends "layout.html" %}
+{% block content %} -->
+<div class="cont">
+  <div class="demo">
+    <div class="login">
+      <div class="login__check"></div>
+      <div class="login__form">
         <form method="POST" action="/login">
             {{ form.hidden_tag() }}
-            <fieldset class="form-group">
+            <!-- <fieldset class="form-group"> -->
                 <legend class="border-bottom mb-4">Log In</legend>
-                <div class="form-group">
-                    {{ form.email_id.label(class="form-control-label") }}
+                <div class="login__row">
+                  <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
+                    <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
+                  </svg>
+                    {{ form.email_id.label(class="login__input name") }}
                     {% if form.email_id.errors %}
-                        {{ form.email_id(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
+                        {{ form.email_id(class="login__input name") }}
+                        <!-- <div class="invalid-feedback"> -->
                             {% for error in form.email_id.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
-                        </div>
+                        <!-- </div> -->
                     {% else %}
-                        {{ form.email_id(class="form-control form-control-lg") }}
+                        {{ form.email_id(class="login__input name") }}
                     {% endif %}
                 </div>
-                <div class="form-group">
+                <div class="login__row">
+                  <svg class="login__icon pass svg-icon" viewBox="0 0 20 20">
+                    <path d="M0,20 20,20 20,8 0,8z M10,13 10,16z M4,8 a6,8 0 0,1 12,0" />
+                  </svg>
                     {{ form.password.label(class="form-control-label") }}
                     {% if form.password.errors %}
                         {{ form.password(class="form-control form-control-lg is-invalid") }}
-                        <div class="invalid-feedback">
+                        <!-- <div class="invalid-feedback"> -->
                             {% for error in form.password.errors %}
                                 <span>{{ error }}</span>
                             {% endfor %}
-                        </div>
+                        <!-- </div> -->
                     {% else %}
-                        {{ form.password(class="form-control form-control-lg") }}
+                        {{ form.password(class="login__input pass") }}
                     {% endif %}
                 </div>
                 <div class="form-check">
                     {{ form.remember(class="form-check-input") }}
                     {{ form.remember.label(class="form-check-label") }}
                 </div>
-            </fieldset>
+            <!-- </fieldset> -->
             <div class="form-group">
                 {{ form.login(class="btn btn-outline-info") }}
             </div>
@@ -43,10 +53,14 @@
                 <a href="#">Forgot Password?</a>
             </small>
         </form>
+        </div>
+        <div class="login__submit">
+            <small class="text-muted">
+                Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
+            </small>
+        </div>
     </div>
-    <div class="border-top pt-3">
-        <small class="text-muted">
-            Need An Account? <a class="ml-2" href="{{ url_for('register') }}">Sign Up Now</a>
-        </small>
-    </div>
-{% endblock content %}
+
+  </div>
+</div>
+<!-- {% endblock content %} -->

@@ -25,12 +25,14 @@ class Owner(Employee, UserMixin):
 	def set_employee_pay(self, email_id, pay):
 		if (employee := load_user_by_email(email_id)):
 			employee.pay = pay
-			db['user_info'].update_one({'email_id':email_id},
-				{'$set':{'pay':pay, '_pickled':pickle.dumps(employee)}})
-			flash('Pay set successfully!', 'success')
-			return True
-		else:
-			return False
+			try:
+				db['user_info'].update_one({'email_id':email_id},
+					{'$set':{'pay':pay, '_pickled':pickle.dumps(employee)}})
+
+				return True
+			except e:
+				print(e)
+				return False
 
 	def upload_employee_pay_slips(self, email_id, file):
 		if (employee := load_user_by_email(email_id)):
