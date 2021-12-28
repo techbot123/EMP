@@ -14,9 +14,13 @@ def check_password(hash_password, password):
 
 @login_manager.user_loader
 def load_user(id):
-	print(f'in load user function with id {id} with type {type(id)}')
-	u = db['user_info'].find_one({"id":id})
-	return pickle.loads(u['_pickled'])
+    print(f'in load user function with id {id} with type {type(id)}')
+    u = db['user_info'].find_one({"id":id})
+    try:
+        return pickle.loads(u['_pickled'])
+    except Exception as e:
+        print(e)
+        return None
 
 class Employee(UserMixin):
     def __init__(self, active=True, anonymous = False, authenticated = True):
