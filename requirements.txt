@@ -1,30 +1,31 @@
-botocore @ file:///tmp/build/80754af9/botocore_1633531073272/work
+boto3
+botocore
 brotlipy==0.7.0
 certifi==2021.10.8
-cffi @ file:///opt/concourse/worker/volumes/live/976f8942-f51d-4f0e-7352-2a10f0820d0e/volume/cffi_1625814703974/work
+cffi
 click==8.0.3
-cryptography @ file:///opt/concourse/worker/volumes/live/a9ca20dd-e1fe-4ed3-754e-0db64082a5d2/volume/cryptography_1639414576087/work
+cryptography
 dnspython==1.16.0
-email-validator @ file:///home/conda/feedstock_root/build_artifacts/email-validator-meta_1623593316902/work
-Flask @ file:///tmp/build/80754af9/flask_1634118196080/work
+email-validator
+Flask
 Flask-Login==0.5.0
 Flask-WTF==0.14.3
 gunicorn==20.1.0
-idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1609836280497/work
-itsdangerous @ file:///tmp/build/80754af9/itsdangerous_1621432558163/work
-Jinja2 @ file:///tmp/build/80754af9/jinja2_1635780242639/work
-jmespath @ file:///tmp/build/80754af9/jmespath_1594304593830/work
-MarkupSafe @ file:///opt/concourse/worker/volumes/live/1bcf0940-5bf8-4171-61e3-2133f5885e8b/volume/markupsafe_1621528148241/work
+idna
+itsdangerous
+Jinja2
+jmespath
+MarkupSafe
 olefile==0.46
-phonenumbers @ file:///home/conda/feedstock_root/build_artifacts/phonenumbers_1640422020016/work
+phonenumbers
 Pillow==8.4.0
-pycparser @ file:///tmp/build/80754af9/pycparser_1594388511720/work
+pycparser
 pymongo==3.12.0
-pyOpenSSL @ file:///tmp/build/80754af9/pyopenssl_1594392929924/work
-PySocks @ file:///opt/concourse/worker/volumes/live/112288ac-9cb0-4e73-768b-13baf4ca6419/volume/pysocks_1605305820043/work
+pyOpenSSL
+PySocks
 python-dateutil==2.8.1
-s3transfer @ file:///tmp/build/80754af9/s3transfer_1626435152308/work
+s3transfer
 six==1.15.0
-urllib3 @ file:///tmp/build/80754af9/urllib3_1603305693037/work
-Werkzeug @ file:///tmp/build/80754af9/werkzeug_1635505089296/work
-WTForms @ file:///tmp/build/80754af9/wtforms_1597707484216/work
+urllib3
+Werkzeug
+WTForms 
