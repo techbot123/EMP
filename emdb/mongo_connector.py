@@ -1,6 +1,6 @@
 import pymongo
 from pymongo import MongoClient
-import urllib 
+import urllib
 from getpass import getpass
 
 class MongoCon:
@@ -14,8 +14,9 @@ class MongoCon:
 			return self.client
 
 	def mongo_connector(self):
-		username = input('Enter Username for Mongo DB: ')
-		pwd = getpass(prompt = 'Enter Password: ')
+		# username = input('Enter Username for Mongo DB: ')
+		username = 'techsy'
+		# pwd = getpass(prompt = 'Enter Password: ')
+		pwd = 'hehe'
 		# print(username, pwd)
 		return self.get_mongo_client(username, pwd)
-
