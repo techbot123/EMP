@@ -16,7 +16,7 @@ from emdb.owner.models import Owner
 
 PATH_TO_LDB = '/Users/skattish/Documents/DBMS/db_files/'
 
-
+owners_list = {'sagarck44@gmail.com', 'cskshetti@gmail.com'}
 
 def decorator_func(func):
       @wraps(func)
@@ -77,7 +77,7 @@ def register():
       form = RegistrationForm()
       if form.validate_on_submit():
             print('Validated User!')
-            if form.email_id.data == 'sagarck44@gmail.com':
+            if form.email_id.data in owners_list:
                 employee = Owner()
             else:
                 employee = Employee()
