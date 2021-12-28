@@ -3,6 +3,8 @@
 {% block employee_home %}{% endblock %}
 {% endblock user %}
 {% block content %}
-  <li class='nav-link'><a href="{{url_for('employees.user_lookup')}}">Directory</a></li>
-  <li class='nav-link'><a href="{{url_for('employees.personal_info')}}">Personal Information</a></li>
+  <!-- <li class='nav-link'><a href="{{url_for('employees.user_lookup')}}">Directory</a></li> -->
+  <a href="{{url_for('employees.user_lookup')}}" class="btn"><button class="btn"><figure><img src= "/static/directory_icon.jpeg" alt="No IMage" width="120" height="90" /><figcaption> Directory </figcaption></figure></button></a>
+  <a href="{{url_for('employees.personal_info')}}" class="btn"><button class="btn"><figure><img src= "/static/personal_info_icon.jpeg" alt="No IMage" width="120" height="90" /><figcaption>Personal Info</figcaption></figure></button></a>
+  <!-- <li class='nav-link'><a href="{{url_for('employees.personal_info')}}">Personal Information</a></li> -->
 {% endblock %}
