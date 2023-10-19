@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="signup__container">
+        <form method="POST" action="" enctype="multipart/form-data">
+          <div class="signup__container">
+            {{ form.hidden_tag() }}
+            <div class="container__child signup__thumbnail">
+		        <div class="thumbnail__content text-center"></div>
+		        <div class="signup__overlay"></div>
+		    </div>
+            <div class="container__child signup__form">
+              <div class="form-group">
+                  {{ form.search_box.label(class="form-control-label") }}
+                  {% if form.search_box.errors %}
+                      {{ form.search_box(class="form-control form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.search_box.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.search_box(class="form-control form-control-lg") }}
+                  {% endif %}
+               </div>
+            <div class="form-group">
+              {{ form.search(class="btn btn-outline-info") }}
+            </div>
+            <!-- <h1>{{ name }}</h1> -->
+            <table>
+            {% for key in user_.keys() %}
+               <tr>
+    						 		<th> <img src= " {{ user_[key] }} " alt="No IMage" width="120" height="90" /> </th>
+                    <!-- <th> {{ user_[key] }} </th> -->
+                    <!-- <td> {{ value }} </td> -->
+               </tr>
+            {% endfor %}
+            </table>
+            <div class="form-group">
+              {{ form.like(class="btn btn-outline-info") }}
+            </div>
+            <div class="form-group">
+              {{ form.dislike(class="btn btn-outline-info") }}
+            </div>
+          </div>
+        </div>
+        </form>
+    </div>
+{% endblock content %}
+{% block user %}
+{% endblock user %}

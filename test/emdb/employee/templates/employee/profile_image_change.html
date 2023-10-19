@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="" enctype="multipart/form-data">
+      <div class="signup__container">
+        {{ form.hidden_tag() }}
+        <div class="container__child signup__thumbnail">
+        <div class="thumbnail__content text-center">
+          <h1 class="heading--primary">EM Electronix</h1>
+        </div>
+        <div class="signup__overlay"></div>
+    </div>
+        <div class="container__child signup__form">
+          <div class="form-group">
+              {{ form.profile_image.label(class="form-control-label") }}
+              {% if form.profile_image.errors %}
+                  {{ form.profile_image(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for error in form.profile_image.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.profile_image(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+            <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+          </div>
+        </div>
+        </div>
+    </form>
+</div>
+{% endblock content%}

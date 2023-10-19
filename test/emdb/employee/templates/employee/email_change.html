@@ -1,0 +1,39 @@
+{% extends "employee_home.html" %}
+{% block content %}
+<div class="content-section">
+    <div class="content-section">
+      <h2>Your Current Email ID is </h2>
+      <p>{{ email }}</p>
+    </div>
+    <form method="POST" action="">
+      <div class="signup__container">
+        {{ form.hidden_tag() }}
+        <div class="container__child signup__thumbnail">
+        <div class="thumbnail__content text-center">
+          <h1 class="heading--primary">EM Electronix</h1>
+          <h2 class="heading--secondary">Employee Sign Up portal</h2>
+        </div>
+        <div class="signup__overlay"></div>
+    </div>
+        <div class="container__child signup__form">
+          <div class="form-group">
+              {{ form.email_id.label(class="form-control-label") }}
+              {% if form.email_id.errors %}
+                  {{ form.email_id(class="form-control form-control-lg is-invalid") }}
+                  <div class="invalid-feedback">
+                      {% for error in form.email_id.errors %}
+                          <span>{{ error }}</span>
+                      {% endfor %}
+                  </div>
+              {% else %}
+                  {{ form.email_id(class="form-control form-control-lg") }}
+              {% endif %}
+          </div>
+            <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+          </div>
+        </div>
+        </div>
+    </form>
+</div>
+{% endblock content %}

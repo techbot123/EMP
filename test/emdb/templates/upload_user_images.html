@@ -1,0 +1,104 @@
+{% extends "layout.html" %}
+{% block content %}
+    <!-- <div class="signup__container"> -->
+        <form method="POST" action="" enctype="multipart/form-data">
+          <div class="signup__container">
+            {{ form.hidden_tag() }}
+            <div class="container__child signup__thumbnail">
+		        <div class="thumbnail__content text-center">
+		          <h1 class="heading--primary">EM Electronix</h1>
+		          <h2 class="heading--secondary">Employee Sign Up portal</h2>
+		        </div>
+		        <div class="signup__overlay"></div>
+		    </div>
+            <div class="container__child signup__form">
+                <div class="form-group">
+                    {{ form.profile_image.label(class="form-control-label") }}
+
+                    {% if form.profile_image.errors %}
+                        {{ form.profile_image(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.profile_image.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.profile_image(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.image1.label(class="form-control-label") }}
+
+                    {% if form.image1.errors %}
+                        {{ form.image1(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.image1.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.image1(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.image2.label(class="form-control-label") }}
+                    {% if form.image2.errors %}
+                        {{ form.image2(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.image2.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.image2(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.image3.label(class="form-control-label") }}
+                    {% if form.image3.errors %}
+                        {{ form.image3(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.image3.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.image3(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.image4.label(class="form-control-label") }}
+                    {% if form.image4.errors %}
+                        {{ form.image4(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.image4.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.image4(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.image5.label(class="form-control-label") }}
+                    {% if form.image5.errors %}
+                        {{ form.image5(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.image5.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.image5(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                {{ form.submit(class="btn btn-outline-info") }}
+            	</div>
+            </div>
+            </div>
+        </form>
+
+    <!-- </div> -->
+
+{% endblock %}

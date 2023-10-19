@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<p id="demo">Click the button to get your coordinates:</p>
+
+<button onclick="getLocation()">Try It</button>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            // Success function
+            showPosition,
+            // Error function
+            null,
+            // Options. See MDN for details.
+            {
+               enableHighAccuracy: true,
+               timeout: 5000,
+               maximumAge: 0
+            });
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    let x = {
+             'Latitude': position.coords.latitude,
+             'Longitude': position.coords.longitude,
+            }
+    $.ajax({
+               type: "POST",
+               url: "/postlocation",
+               contentType: "application/json",
+               data: JSON.stringify(x),
+               dataType: "json",
+               success: function(){
+                    window.location.href = "upload_user_pictures";
+                },
+               error: function(err) {
+                   window.location.href = "user_location";
+                   console.log(err);
+               }
+           });
+
+
+}
+</script>
+
+{% endblock %}

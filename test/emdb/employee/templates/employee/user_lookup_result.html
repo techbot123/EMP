@@ -1,0 +1,19 @@
+{% extends "user_lookup.html" %}
+{% block user %}
+	<div class="content-section">
+		{% if user_ is not none %}
+        <h1>User found</h1>
+        <table>
+        {% for key in user_.keys() %}
+           <tr>
+						 		<th> <img src= " {{ user_[key][0] }} " alt="No IMage" width="120" height="90" /> </th>
+                <th> {{ user_[key][1] }} </th>
+                <!-- <td> {{ value }} </td> -->
+           </tr>
+        {% endfor %}
+        </table>
+		{% else %}
+			<h1>user not found!</h1>
+		{% endif %}
+	</div>
+{% endblock user %}
